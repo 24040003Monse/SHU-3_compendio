@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Integrado - 6 Servicios en 1</title>
+    
+    <!-- Estilos externos -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Nuestro CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Dashboard Integrado de Servicios</h1>
+        
+        <div class="dashboard">
+            <!-- Módulo 1: Geolocalización -->
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <h2>Geolocalización</h2>
+                </div>
+                <div id="map"></div>
+                <div class="coordinates" id="coordinates">
+                    <i class="fas fa-spinner fa-spin"></i> Obteniendo ubicación...
+                </div>
+            </div>
+
+            <!-- Módulo 2: Redes Sociales -->
+            <div class="card">
+                <div class="card-header">
+                    <i class="fab fa-twitter"></i>
+                    <h2>Redes Sociales</h2>
+                </div>
+                <div class="social-feed" id="social-feed">
+                    <div class="loading">Cargando tweets...</div>
+                </div>
+            </div>
+
+            <!-- Módulo 3: E-commerce -->
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-shopping-cart"></i>
+                    <h2>E-commerce</h2>
+                </div>
+                <div class="product-search">
+                    <input type="text" id="productInput" placeholder="Buscar producto..." value="laptop">
+                    <button onclick="searchProduct()">
+                        <i class="fas fa-search"></i> Buscar
+                    </button>
+                </div>
+                <div class="product-result">
+                    <img src="https://via.placeholder.com/100" alt="Producto">
+                    <div class="product-info">
+                        <h3 id="productTitle">Laptop Ultrabook</h3>
+                        <p id="productPrice">$999.99</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Módulo 4: Base de Datos -->
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-database"></i>
+                    <h2>Base de Datos</h2>
+                </div>
+                <div class="db-form">
+                    <input type="text" id="username" placeholder="Ingresa tu usuario">
+                    <button onclick="saveToCloud()">
+                        <i class="fas fa-cloud-upload-alt"></i> Guardar en nube
+                    </button>
+                </div>
+                <div class="user-list" id="userList"></div>
+            </div>
+
+            <!-- Módulo 5: Protocolos SMS -->
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-comment-dots"></i>
+                    <h2>Protocolos SMS</h2>
+                </div>
+                <div class="sms-simulator">
+                    <textarea id="smsMessage" placeholder="Escribe tu mensaje SMS..."></textarea>
+                    <button onclick="sendSMS()">
+                        <i class="fas fa-paper-plane"></i> Enviar SMS
+                    </button>
+                    <div class="notification-area" id="notificationArea">
+                        <i class="far fa-clock"></i> Último mensaje: Ninguno
+                    </div>
+                </div>
+            </div>
+
+            <!-- Módulo 6: Streaming -->
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-play-circle"></i>
+                    <h2>Streaming</h2>
+                </div>
+                <div class="player-container">
+                    <div class="video-wrapper">
+                        <iframe id="videoPlayer" src="https://www.youtube.com/embed/jfKfPfyJRdk" 
+                                frameborder="0" allowfullscreen></iframe>
+                    </div>
+                    <div class="player-controls">
+                        <button onclick="playVideo()"><i class="fas fa-play"></i> Play</button>
+                        <button onclick="pauseVideo()"><i class="fas fa-pause"></i> Pause</button>
+                        <button onclick="changeVideo()"><i class="fas fa-random"></i> Cambiar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

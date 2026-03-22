@@ -1,0 +1,394 @@
+/* ===== RESET Y VARIABLES GLOBALES ===== */
+:root {
+    --primary-color: #667eea;
+    --secondary-color: #764ba2;
+    --success-color: #48bb78;
+    --warning-color: #f6ad55;
+    --danger-color: #f56565;
+    --dark-color: #2d3748;
+    --light-color: #f7fafc;
+    --border-color: #e2e8f0;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    min-height: 100vh;
+    padding: 20px;
+}
+
+/* ===== CONTENEDOR PRINCIPAL ===== */
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+h1 {
+    text-align: center;
+    color: white;
+    margin-bottom: 30px;
+    font-size: 2.5em;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+}
+
+/* ===== GRID DEL DASHBOARD ===== */
+.dashboard {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 20px;
+}
+
+/* ===== TARJETAS ===== */
+.card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.card-header i {
+    font-size: 24px;
+    color: var(--primary-color);
+}
+
+.card-header h2 {
+    font-size: 1.2rem;
+    color: var(--dark-color);
+}
+
+/* ===== COMPONENTE 1: GEOLOCALIZACIÓN ===== */
+#map {
+    height: 250px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    z-index: 1;
+}
+
+.coordinates {
+    background: var(--light-color);
+    padding: 10px;
+    border-radius: 8px;
+    text-align: center;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+}
+
+/* ===== COMPONENTE 2: REDES SOCIALES ===== */
+.social-feed {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.twitter-post {
+    background: var(--light-color);
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 10px;
+    transition: background 0.3s ease;
+}
+
+.twitter-post:hover {
+    background: #edf2f7;
+}
+
+.twitter-post-content {
+    display: flex;
+    gap: 10px;
+}
+
+.twitter-post img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.twitter-post-text {
+    flex: 1;
+}
+
+.twitter-post-text strong {
+    color: var(--primary-color);
+}
+
+.twitter-post-text small {
+    color: #718096;
+}
+
+/* ===== COMPONENTE 3: E-COMMERCE ===== */
+.product-search {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.product-search input {
+    flex: 1;
+    padding: 12px;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.product-search input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+.product-search button {
+    padding: 12px 20px;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.product-search button:hover {
+    background: #5a67d8;
+    transform: scale(1.02);
+}
+
+.product-result {
+    display: flex;
+    gap: 15px;
+    padding: 15px;
+    background: var(--light-color);
+    border-radius: 10px;
+    align-items: center;
+}
+
+.product-result img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.product-info h3 {
+    color: var(--dark-color);
+    margin-bottom: 5px;
+}
+
+.product-info p {
+    color: var(--primary-color);
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+/* ===== COMPONENTE 4: BASE DE DATOS ===== */
+.db-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.db-form input {
+    padding: 12px;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.db-form input:focus {
+    outline: none;
+    border-color: var(--success-color);
+}
+
+.db-form button {
+    padding: 12px;
+    background: var(--success-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.db-form button:hover {
+    background: #38a169;
+}
+
+.user-list {
+    margin-top: 15px;
+    max-height: 150px;
+    overflow-y: auto;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 10px;
+}
+
+.user-item {
+    background: var(--light-color);
+    padding: 8px 12px;
+    margin: 5px 0;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* ===== COMPONENTE 5: PROTOCOLOS SMS ===== */
+.sms-simulator {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.sms-simulator textarea {
+    padding: 12px;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    resize: none;
+    height: 100px;
+    font-family: inherit;
+    transition: border-color 0.3s ease;
+}
+
+.sms-simulator textarea:focus {
+    outline: none;
+    border-color: var(--warning-color);
+}
+
+.sms-simulator button {
+    padding: 12px;
+    background: var(--warning-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.sms-simulator button:hover {
+    background: #ed8936;
+}
+
+.notification-area {
+    background: var(--light-color);
+    padding: 12px;
+    border-radius: 8px;
+    min-height: 80px;
+    border-left: 4px solid var(--warning-color);
+}
+
+/* ===== COMPONENTE 6: STREAMING ===== */
+.player-container {
+    width: 100%;
+}
+
+.video-wrapper {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.video-wrapper iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.player-controls {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.player-controls button {
+    flex: 1;
+    padding: 10px;
+    background: #9f7aea;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 100px;
+}
+
+.player-controls button:hover {
+    background: #805ad5;
+    transform: translateY(-2px);
+}
+
+/* ===== UTILIDADES ===== */
+.loading {
+    text-align: center;
+    padding: 20px;
+    color: #718096;
+}
+
+.success-message {
+    color: var(--success-color);
+    font-size: 0.9rem;
+    margin-top: 5px;
+    padding: 5px;
+    background: #f0fff4;
+    border-radius: 5px;
+}
+
+/* ===== SCROLL PERSONALIZADO ===== */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--border-color);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 10px;
+}
+
+/* ===== MEDIA QUERIES ===== */
+@media (max-width: 768px) {
+    .dashboard {
+        grid-template-columns: 1fr;
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
+    
+    .product-search {
+        flex-direction: column;
+    }
+    
+    .player-controls {
+        flex-direction: column;
+    }
+}
