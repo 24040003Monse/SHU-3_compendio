@@ -3,119 +3,93 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Integrado - 6 Servicios en 1</title>
+    <title>Mashup Dashboard - 6 APIs Integradas</title>
     
-    <!-- Estilos externos -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
-    <!-- Nuestro CSS -->
+    <!-- CSS Principal -->
     <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Leaflet CSS para mapas -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 </head>
 <body>
-    <div class="container">
-        <h1>🚀 Dashboard Integrado de Servicios</h1>
+    <div class="dashboard">
+        <h1>🌐 Mashup Dashboard - 6 APIs en una sola pantalla</h1>
         
-        <div class="dashboard">
-            <!-- Módulo 1: Geolocalización -->
+        <div class="grid-container">
+            <!-- 1. Geolocalización -->
             <div class="card">
-                <div class="card-header">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <h2>Geolocalización</h2>
-                </div>
+                <h2>📍 Geolocalización - OpenStreetMap</h2>
                 <div id="map"></div>
-                <div class="coordinates" id="coordinates">
-                    <i class="fas fa-spinner fa-spin"></i> Obteniendo ubicación...
+                <div class="map-controls">
+                    <button class="btn" onclick="App.geolocalizacion.getLocation()">📍 Mi ubicación</button>
+                    <button class="btn" onclick="App.geolocalizacion.searchCity()">🔍 Buscar ciudad</button>
                 </div>
+                <input type="text" id="cityInput" placeholder="Nombre de la ciudad..." class="input-field">
+                <p id="coordinates" class="coordinates-text"></p>
             </div>
 
-            <!-- Módulo 2: Redes Sociales -->
+            <!-- 2. Redes Sociales -->
             <div class="card">
-                <div class="card-header">
-                    <i class="fab fa-twitter"></i>
-                    <h2>Redes Sociales</h2>
+                <h2>📱 Redes Sociales - JSONPlaceholder</h2>
+                <div class="social-post" id="socialPosts">
+                    <p>Cargando publicaciones...</p>
                 </div>
-                <div class="social-feed" id="social-feed">
-                    <div class="loading">Cargando tweets...</div>
-                </div>
+                <button class="btn btn-small" onclick="App.sociales.loadPosts()">↻ Actualizar posts</button>
             </div>
 
-            <!-- Módulo 3: E-commerce -->
+            <!-- 3. E-commerce -->
             <div class="card">
-                <div class="card-header">
-                    <i class="fas fa-shopping-cart"></i>
-                    <h2>E-commerce</h2>
-                </div>
+                <h2>🛒 E-commerce - Fake Store API</h2>
                 <div class="product-search">
-                    <input type="text" id="productInput" placeholder="Buscar producto..." value="laptop">
-                    <button onclick="searchProduct()">
-                        <i class="fas fa-search"></i> Buscar
-                    </button>
+                    <input type="text" id="productSearch" placeholder="Buscar producto..." class="input-field">
+                    <button class="btn btn-small" onclick="App.ecommerce.searchProduct()">Buscar</button>
                 </div>
-                <div class="product-result">
-                    <img src="https://via.placeholder.com/100" alt="Producto">
-                    <div class="product-info">
-                        <h3 id="productTitle">Laptop Ultrabook</h3>
-                        <p id="productPrice">$999.99</p>
-                    </div>
+                <div id="productResult" class="product-card">
+                    <p>Busca un producto para ver resultados</p>
                 </div>
             </div>
 
-            <!-- Módulo 4: Base de Datos -->
+            <!-- 4. Base de datos -->
             <div class="card">
-                <div class="card-header">
-                    <i class="fas fa-database"></i>
-                    <h2>Base de Datos</h2>
+                <h2>💾 Base de datos - Firebase Realtime</h2>
+                <div class="user-form">
+                    <input type="text" id="username" placeholder="Nombre de usuario" class="input-field">
+                    <button class="btn btn-small" onclick="App.database.saveUser()">Guardar</button>
                 </div>
-                <div class="db-form">
-                    <input type="text" id="username" placeholder="Ingresa tu usuario">
-                    <button onclick="saveToCloud()">
-                        <i class="fas fa-cloud-upload-alt"></i> Guardar en nube
-                    </button>
+                <div class="user-list" id="userList">
+                    <p>Cargando usuarios...</p>
                 </div>
-                <div class="user-list" id="userList"></div>
             </div>
 
-            <!-- Módulo 5: Protocolos SMS -->
+            <!-- 5. Protocolos comunicación -->
             <div class="card">
-                <div class="card-header">
-                    <i class="fas fa-comment-dots"></i>
-                    <h2>Protocolos SMS</h2>
-                </div>
+                <h2>📨 Protocolos - Simulador SMS</h2>
                 <div class="sms-simulator">
-                    <textarea id="smsMessage" placeholder="Escribe tu mensaje SMS..."></textarea>
-                    <button onclick="sendSMS()">
-                        <i class="fas fa-paper-plane"></i> Enviar SMS
-                    </button>
-                    <div class="notification-area" id="notificationArea">
-                        <i class="far fa-clock"></i> Último mensaje: Ninguno
+                    <div class="sms-form">
+                        <input type="text" id="phoneNumber" placeholder="Número de teléfono" class="input-field">
+                        <textarea id="smsMessage" rows="2" placeholder="Mensaje SMS..." class="input-field"></textarea>
+                        <button class="btn btn-small" onclick="App.sms.send()">Enviar SMS</button>
+                    </div>
+                    <div class="sms-log" id="smsLog">
+                        <p>Registro de mensajes...</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Módulo 6: Streaming -->
-            <div class="card">
-                <div class="card-header">
-                    <i class="fas fa-play-circle"></i>
-                    <h2>Streaming</h2>
-                </div>
-                <div class="player-container">
-                    <div class="video-wrapper">
-                        <iframe id="videoPlayer" src="https://www.youtube.com/embed/jfKfPfyJRdk" 
-                                frameborder="0" allowfullscreen></iframe>
-                    </div>
-                    <div class="player-controls">
-                        <button onclick="playVideo()"><i class="fas fa-play"></i> Play</button>
-                        <button onclick="pauseVideo()"><i class="fas fa-pause"></i> Pause</button>
-                        <button onclick="changeVideo()"><i class="fas fa-random"></i> Cambiar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+<!-- 6. Streaming - YouTube Player -->
+<div class="card">
+    <h2>🎬 Streaming - YouTube Player</h2>
+    <div id="playerContainer" class="streaming-container" style="min-height: 450px;"></div>
+    <p class="status-text">
+        <span class="status-indicator status-offline"></span>
+        YouTube Player
+    </p>
+</div>
 
     <!-- Scripts -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="js/app.js"></script>
+    
+    <!-- Módulos JavaScript -->
+    <script type="module" src="js/app.js"></script>
 </body>
 </html>
