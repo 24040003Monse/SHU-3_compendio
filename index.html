@@ -4,20 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mashup Dashboard - 6 APIs Integradas</title>
-    
-    <!-- CSS Principal -->
     <link rel="stylesheet" href="css/style.css">
-    
-    <!-- Leaflet CSS para mapas -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 </head>
 <body>
+    <div class="orb-center"></div>
     <div class="dashboard">
         <h1>🌐 Mashup Dashboard - 6 APIs en una sola pantalla</h1>
-        
         <div class="grid-container">
+
             <!-- 1. Geolocalización -->
-            <div class="card">
+            <div class="card" id="card-geo">
                 <h2>📍 Geolocalización - OpenStreetMap</h2>
                 <div id="map"></div>
                 <div class="map-controls">
@@ -29,28 +26,19 @@
             </div>
 
             <!-- 2. Redes Sociales -->
-            <div class="card">
-                <h2>📱 Redes Sociales - JSONPlaceholder</h2>
-                <div id="socialPosts" class="social-post">
-                    <p>Cargando publicaciones...</p>
-                </div>
-                <button class="btn btn-small" id="actualizarPostsBtn">↻ Actualizar posts</button>
+            <div class="card" id="card-sociales">
+                <h2>📱 Redes Sociales</h2>
+                <p>Cargando...</p>
             </div>
 
             <!-- 3. E-commerce -->
-            <div class="card">
-                <h2>🛒 E-commerce - Fake Store API</h2>
-                <div class="product-search">
-                    <input type="text" id="productSearch" placeholder="Buscar producto..." class="input-field">
-                    <button class="btn btn-small" id="buscarProductoBtn">Buscar</button>
-                </div>
-                <div id="productResult" class="product-card">
-                    <p>Busca un producto para ver resultados</p>
-                </div>
+            <div class="card" id="card-ecommerce">
+                <h2>🛒 E-commerce</h2>
+                <p>Cargando...</p>
             </div>
 
             <!-- 4. Base de datos -->
-            <div class="card">
+            <div class="card" id="card-database">
                 <h2>💾 Base de datos - Cloud Storage</h2>
                 <div class="user-form">
                     <input type="text" id="username" placeholder="Nombre de usuario" class="input-field">
@@ -61,8 +49,8 @@
                 </div>
             </div>
 
-            <!-- 5. Protocolos comunicación -->
-            <div class="card">
+            <!-- 5. SMS -->
+            <div class="card" id="card-sms">
                 <h2>📨 Protocolos - Simulador SMS</h2>
                 <div class="sms-simulator">
                     <div class="sms-form">
@@ -77,29 +65,22 @@
             </div>
 
             <!-- 6. Streaming -->
-            <div class="card">
+            <div class="card" id="card-streaming">
                 <h2>🎬 Streaming - YouTube Player</h2>
-                <div id="playerContainer" style="min-height: 450px;"></div>
+                <div id="playerContainer"></div>
                 <p id="statusText" class="status-text">
                     <span class="status-indicator status-offline"></span>
                     YouTube Player
                 </p>
             </div>
+
         </div>
     </div>
 
-    <!-- ========== SCRIPTS ========== -->
-    <!-- Leaflet para mapas -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    
-    <!-- YouTube API -->
     <script src="https://www.youtube.com/iframe_api"></script>
-    
-    <!-- Firebase SDKs (versión compat) -->
     <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-database-compat.js"></script>
-    
-    <!-- Tu script principal (debe ir DESPUÉS de Firebase) -->
     <script src="js/app.js" type="module"></script>
 </body>
 </html>
