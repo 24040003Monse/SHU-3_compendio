@@ -12,7 +12,6 @@ export class Streaming {
     init() {
         const container = document.getElementById('video-container');
         if (!container) return;
-        
         container.innerHTML = '';
         container.innerHTML = '<div id="youtubePlayer" class="yt-player"></div>';
         

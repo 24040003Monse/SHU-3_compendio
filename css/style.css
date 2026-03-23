@@ -19,6 +19,11 @@
     --accent4: #f472b6;
     --accent-glow: rgba(167,139,250,0.35);
 
+    /* YouTube red */
+    --yt-red:       #ff0000;
+    --yt-red-dark:  #cc0000;
+    --yt-red-glow:  rgba(255,0,0,0.25);
+
     --text-primary:   rgba(255,255,255,0.95);
     --text-secondary: rgba(255,255,255,0.60);
     --text-muted:     rgba(255,255,255,0.35);
@@ -793,7 +798,6 @@ textarea.input-field {
    SOCIALES - Instagram + Twitter Glass
    ========================================== */
 
-/* Perfil */
 .soc-profile {
     display:flex; align-items:center; gap:12px;
     background: rgba(255,255,255,0.07);
@@ -834,7 +838,6 @@ textarea.input-field {
 
 .soc-user-select option { background:#1a1a2e; color:white; }
 
-/* Trending */
 .soc-trending {
     background: rgba(255,255,255,0.05);
     border: 1px solid rgba(255,255,255,0.10);
@@ -860,7 +863,6 @@ textarea.input-field {
 .soc-trend-tag { font-size:13px; font-weight:700; color: var(--text-primary); }
 .soc-trend-count { font-size:11px; color: var(--text-muted); }
 
-/* Composer */
 .soc-composer {
     background: rgba(255,255,255,0.05);
     border: 1px solid rgba(255,255,255,0.10);
@@ -931,7 +933,6 @@ textarea.input-field {
 .soc-composer-right { display:flex; align-items:center; gap:8px; }
 .soc-char-count { font-size:11px; color: var(--text-muted); }
 
-/* Tweets feed */
 .soc-tweets-feed {
     background: rgba(255,255,255,0.04);
     border: 1px solid rgba(255,255,255,0.08);
@@ -974,10 +975,8 @@ textarea.input-field {
 .soc-tweet-reply:hover { color: var(--accent1); background:rgba(167,139,250,0.1); }
 .soc-tweet-rt:hover    { color: var(--accent3); background:rgba(52,211,153,0.1); }
 
-/* Divisor */
 .soc-divider { text-align:center; font-size:11px; color: var(--text-muted); margin:10px 0; letter-spacing:1px; }
 
-/* Stories */
 .ig-stories-wrap { overflow-x:auto; margin-bottom:12px; padding-bottom:4px; }
 .ig-stories-wrap::-webkit-scrollbar { height:3px; }
 .ig-stories-wrap::-webkit-scrollbar-thumb { background:rgba(167,139,250,0.3); border-radius:4px; }
@@ -1006,7 +1005,6 @@ textarea.input-field {
 
 .ig-story-name { font-size:10px; color: var(--text-muted); max-width:62px; text-align:center; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 
-/* Sugerencias */
 .soc-suggestions { display:flex; flex-direction:column; gap:8px; max-height:320px; overflow-y:auto; }
 
 .soc-suggest-item {
@@ -1028,7 +1026,6 @@ textarea.input-field {
 .soc-suggest-info { flex:1; display:flex; flex-direction:column; gap:2px; min-width:0; }
 .soc-suggest-mutual { font-size:11px; color: var(--text-muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 
-/* Follow btn glass */
 .ig-follow-btn {
     font-size:12px; font-weight:600;
     color: var(--accent1);
@@ -1042,7 +1039,6 @@ textarea.input-field {
 .ig-follow-btn:hover { background: var(--accent1); color:white; border-color:transparent; }
 .ig-follow-btn.ig-following { color: var(--text-muted); border-color:rgba(255,255,255,0.1); background:rgba(255,255,255,0.05); }
 
-/* Post avatar */
 .ig-avatar-ring {
     width:40px; height:40px; border-radius:50%;
     background: linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);
@@ -1111,7 +1107,7 @@ textarea.input-field {
     from { opacity:0; transform:translateY(8px); }
     to   { opacity:1; transform:translateY(0); }
 }
-/* ── Scroll interno por sección ── */
+
 .ig-feed {
     max-height: 500px;
     overflow-y: auto;
@@ -1129,114 +1125,159 @@ textarea.input-field {
     gap: 8px;
 }
 
-/* Productos visibles */
 .ml-product-title { color: rgba(255,255,255,0.9) !important; }
 .ml-product-price { color: #ffffff !important; }
 .ml-rating-count  { color: rgba(255,255,255,0.5) !important; }
 .ml-free-ship     { color: #34d399 !important; }
 .ml-result-count  { color: rgba(255,255,255,0.5) !important; }
 
-/* ========== ESTILOS PARA YOUTUBE ========== */
+/* ==========================================
+   YOUTUBE CARD — Glassmorphism
+   ========================================== */
+
+/* El card hereda el glass del .card base.
+   Solo sobreescribimos el borde para darle
+   un toque rojo sutil que lo identifique. */
 .c-yt {
-    background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%) !important;
-    color: #fff;
+    border-color: rgba(255, 60, 60, 0.25) !important;
+    box-shadow:
+        var(--glass-shadow),
+        inset 0 1px 0 rgba(255,255,255,0.12),
+        0 0 40px rgba(255, 0, 0, 0.06) !important;
 }
 
+.c-yt:hover {
+    border-color: rgba(255, 60, 60, 0.40) !important;
+    box-shadow:
+        0 20px 48px rgba(0,0,0,0.35),
+        0 0 0 1px rgba(255, 60, 60, 0.25),
+        0 0 60px rgba(255, 0, 0, 0.10),
+        inset 0 1px 0 rgba(255,255,255,0.18) !important;
+}
+
+/* ── Header del card ── */
 .card-head {
     display: flex;
     align-items: center;
     gap: 12px;
-    margin-bottom: 15px;
+    margin-bottom: 16px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
 }
 
-.card-icon {
-    font-size: 2rem;
-}
+.card-icon { font-size: 1.8rem; line-height: 1; }
 
 .card-title {
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: #fff;
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.2px;
 }
 
 .card-sub {
-    font-size: 0.7rem;
-    color: #aaa;
+    font-size: 0.68rem;
+    color: var(--yt-red);
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    margin-top: 2px;
+    opacity: 0.8;
 }
 
+/* ── Input de búsqueda ── */
 .inp {
     flex: 1;
-    padding: 12px;
-    border: 1px solid #333;
-    border-radius: 8px;
-    background: #2a2a2a;
-    color: #fff;
-    font-size: 14px;
+    padding: 10px 14px;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: var(--radius-xs);
+    color: var(--text-primary);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    outline: none;
+    transition: all 0.25s ease;
 }
 
+.inp::placeholder { color: var(--text-muted); }
+
 .inp:focus {
-    outline: none;
-    border-color: #ff0000;
+    border-color: var(--yt-red);
+    background: rgba(255, 0, 0, 0.07);
+    box-shadow: 0 0 0 3px rgba(255, 0, 0, 0.10);
 }
 
 .inp.ok {
-    border-color: #2ecc71;
+    border-color: var(--accent3);
+    background: rgba(52, 211, 153, 0.07);
 }
 
 .inp.er {
-    border-color: #e74c3c;
+    border-color: #f87171;
+    background: rgba(248, 113, 113, 0.07);
 }
 
+/* ── Botón buscar ── */
 .btn-yt {
-    background: #ff0000 !important;
-    padding: 12px 20px !important;
-    font-weight: bold;
+    background: linear-gradient(135deg, var(--yt-red), #ff4444) !important;
+    box-shadow: 0 4px 15px var(--yt-red-glow) !important;
+    padding: 10px 18px !important;
+    font-size: 14px !important;
 }
 
 .btn-yt:hover {
-    background: #cc0000 !important;
+    background: linear-gradient(135deg, var(--yt-red-dark), var(--yt-red)) !important;
+    box-shadow: 0 8px 25px rgba(255, 0, 0, 0.4) !important;
     transform: translateY(-2px);
 }
 
+/* ── Validación ── */
 #yt-validation {
-    margin-top: 8px;
+    margin-top: 6px;
     font-size: 12px;
+    font-weight: 500;
+    min-height: 18px;
 }
 
-#yt-validation.ok {
-    color: #2ecc71;
-}
+#yt-validation.ok { color: var(--accent3); }
+#yt-validation.er { color: #f87171; }
 
-#yt-validation.er {
-    color: #e74c3c;
-}
-
+/* ── Now playing box ── */
 #yt-title-box {
-    margin-top: 15px;
-    padding: 12px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
+    margin-top: 14px;
+    padding: 12px 14px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    border-radius: var(--radius-sm);
+    border-left: 3px solid var(--yt-red);
 }
 
 .yt-now-label {
-    font-size: 11px;
-    color: #ff0000;
-    letter-spacing: 1px;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--yt-red);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
     margin-bottom: 5px;
+    opacity: 0.9;
 }
 
 .yt-now-title {
-    font-size: 14px;
-    font-weight: bold;
-    color: #fff;
+    font-family: 'Outfit', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
     word-break: break-word;
+    line-height: 1.4;
 }
 
+/* ── Video container ── */
 #video-container {
-    background: #000;
-    border-radius: 12px;
+    margin-top: 14px;
+    border-radius: var(--radius-sm);
     overflow: hidden;
     min-height: 250px;
+    background: rgba(0,0,0,0.5);
+    border: 1px solid rgba(255,255,255,0.08);
 }
 
 .yt-placeholder {
@@ -1246,29 +1287,40 @@ textarea.input-field {
     justify-content: center;
     height: 250px;
     gap: 10px;
-    color: #666;
+    color: var(--text-muted);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
 }
 
 .yt-player {
     width: 100%;
     height: 250px;
+    display: block;
 }
 
+/* ── Info row (estado) ── */
 .ir {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     padding: 8px 12px;
     background: rgba(255, 255, 255, 0.05);
-    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-xs);
 }
 
 .il {
-    color: #888;
-    font-size: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
 }
 
 .iv {
-    color: #2ecc71;
     font-size: 12px;
-    font-weight: bold;
+    font-weight: 600;
+    color: var(--accent3);
 }
