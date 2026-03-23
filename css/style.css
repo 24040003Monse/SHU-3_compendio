@@ -1135,3 +1135,140 @@ textarea.input-field {
 .ml-rating-count  { color: rgba(255,255,255,0.5) !important; }
 .ml-free-ship     { color: #34d399 !important; }
 .ml-result-count  { color: rgba(255,255,255,0.5) !important; }
+
+/* ========== ESTILOS PARA YOUTUBE ========== */
+.c-yt {
+    background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%) !important;
+    color: #fff;
+}
+
+.card-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 15px;
+}
+
+.card-icon {
+    font-size: 2rem;
+}
+
+.card-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #fff;
+}
+
+.card-sub {
+    font-size: 0.7rem;
+    color: #aaa;
+}
+
+.inp {
+    flex: 1;
+    padding: 12px;
+    border: 1px solid #333;
+    border-radius: 8px;
+    background: #2a2a2a;
+    color: #fff;
+    font-size: 14px;
+}
+
+.inp:focus {
+    outline: none;
+    border-color: #ff0000;
+}
+
+.inp.ok {
+    border-color: #2ecc71;
+}
+
+.inp.er {
+    border-color: #e74c3c;
+}
+
+.btn-yt {
+    background: #ff0000 !important;
+    padding: 12px 20px !important;
+    font-weight: bold;
+}
+
+.btn-yt:hover {
+    background: #cc0000 !important;
+    transform: translateY(-2px);
+}
+
+#yt-validation {
+    margin-top: 8px;
+    font-size: 12px;
+}
+
+#yt-validation.ok {
+    color: #2ecc71;
+}
+
+#yt-validation.er {
+    color: #e74c3c;
+}
+
+#yt-title-box {
+    margin-top: 15px;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+}
+
+.yt-now-label {
+    font-size: 11px;
+    color: #ff0000;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+}
+
+.yt-now-title {
+    font-size: 14px;
+    font-weight: bold;
+    color: #fff;
+    word-break: break-word;
+}
+
+#video-container {
+    background: #000;
+    border-radius: 12px;
+    overflow: hidden;
+    min-height: 250px;
+}
+
+.yt-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 250px;
+    gap: 10px;
+    color: #666;
+}
+
+.yt-player {
+    width: 100%;
+    height: 250px;
+}
+
+.ir {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 6px;
+}
+
+.il {
+    color: #888;
+    font-size: 12px;
+}
+
+.iv {
+    color: #2ecc71;
+    font-size: 12px;
+    font-weight: bold;
+}

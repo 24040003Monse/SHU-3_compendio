@@ -1,145 +1,245 @@
 export class Streaming {
     constructor() {
-        this.currentIndex = 0;
         this.player = null;
+        this.playerReady = false;
+        this.currentVideoId = null;
+        // 🔴 REEMPLAZA ESTO CON TU API KEY DE YOUTUBE 🔴
+        this.apiKey = 'AIzaSyBBuoxwvfSeKfxyokTlZY1F1aHtmbr4t3k';
         this.init();
+        this.setupEventListeners();
     }
     
     init() {
-        const container = document.getElementById('playerContainer');
+        const container = document.getElementById('video-container');
         if (!container) return;
         
-        // Videos de muestra que vienen con el navegador (100% funcionales)
-        this.playlist = [
-            { url: 'https://www.w3schools.com/html/mov_bbb.mp4', title: '🐮 Big Buck Bunny - Conejo animado', type: 'mp4' },
-            { url: 'https://www.w3schools.com/html/movie.mp4', title: '🎬 Video de muestra - Animación', type: 'mp4' }
-        ];
+        container.innerHTML = '';
+        container.innerHTML = '<div id="youtubePlayer" class="yt-player"></div>';
         
-        this.createPlayer();
+        this.loadYouTubeAPI();
+    }
+    
+    setupEventListeners() {
+        const searchBtn = document.getElementById('ytSearchBtn');
+        const nameInput = document.getElementById('yt-name');
+        
+        if (searchBtn) {
+            searchBtn.addEventListener('click', () => this.searchAndLoadVideo());
+        }
+        
+        if (nameInput) {
+            nameInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') this.searchAndLoadVideo();
+            });
+            nameInput.addEventListener('input', () => this.validateVideoName());
+        }
+    }
+    
+    validateVideoName() {
+        const inp = document.getElementById('yt-name');
+        const el = document.getElementById('yt-validation');
+        const raw = inp.value.trim();
+        
+        if (!raw) {
+            inp.classList.remove('ok', 'er');
+            if (el) {
+                el.textContent = '';
+                el.className = '';
+            }
+            return true;
+        }
+        
+        if (raw.length < 3) {
+            inp.classList.add('er');
+            inp.classList.remove('ok');
+            if (el) {
+                el.textContent = '⚠ Mínimo 3 caracteres';
+                el.className = 'er';
+            }
+            return false;
+        }
+        
+        inp.classList.add('ok');
+        inp.classList.remove('er');
+        if (el) {
+            el.textContent = '✓ Nombre válido';
+            el.className = 'ok';
+        }
+        return true;
+    }
+    
+    async searchAndLoadVideo() {
+        const query = document.getElementById('yt-name').value.trim();
+        
+        if (!query) {
+            this.showNotification('❌ Escribe el nombre de un video');
+            return;
+        }
+        
+        if (!this.validateVideoName()) return;
+        
+        this.updateStatus('Buscando en YouTube...');
+        this.showNotification('🔍 Buscando: ' + query);
+        
+        try {
+            const videoData = await this.searchYouTube(query);
+            
+            if (videoData) {
+                this.loadVideo(videoData.id, videoData.title);
+                this.showNotification('✅ Reproduciendo: ' + videoData.title);
+            } else {
+                this.updateStatus('No se encontró el video');
+                this.showNotification('❌ No se encontró: ' + query);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            this.updateStatus('Error en la búsqueda');
+            this.showNotification('❌ Error al buscar el video');
+        }
+    }
+    
+    async searchYouTube(query) {
+        const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=1&q=${encodeURIComponent(query)}&type=video&key=${this.apiKey}`;
+        
+        try {
+            const response = await fetch(url);
+            const data = await response.json();
+            
+            if (data.error) {
+                console.error('API Error:', data.error);
+                this.showNotification('⚠️ Error de API: Revisa tu API Key');
+                return null;
+            }
+            
+            if (data.items && data.items.length > 0) {
+                return {
+                    id: data.items[0].id.videoId,
+                    title: data.items[0].snippet.title
+                };
+            }
+            return null;
+        } catch (error) {
+            console.error('Error en búsqueda:', error);
+            return null;
+        }
+    }
+    
+    loadYouTubeAPI() {
+        if (window.YT && window.YT.Player) {
+            this.createPlayer();
+            return;
+        }
+        
+        window.onYouTubeIframeAPIReady = () => {
+            console.log('✅ YouTube API lista');
+            this.createPlayer();
+        };
+        
+        if (!document.querySelector('#youtube-api-script')) {
+            const tag = document.createElement('script');
+            tag.id = 'youtube-api-script';
+            tag.src = 'https://www.youtube.com/iframe_api';
+            document.head.appendChild(tag);
+        }
+        
+        setTimeout(() => {
+            if (!this.player && window.YT) {
+                this.createPlayer();
+            }
+        }, 3000);
     }
     
     createPlayer() {
-        const container = document.getElementById('playerContainer');
-        const video = this.playlist[0];
+        const playerDiv = document.getElementById('youtubePlayer');
+        if (!playerDiv) return;
         
-        container.innerHTML = `
-            <video id="videoPlayer" width="100%" height="280" controls style="border-radius: 12px; background: #000;">
-                <source src="${video.url}" type="video/mp4">
-                Tu navegador no soporta video.
-            </video>
-            
-            <div style="margin: 15px 0; padding: 15px; background: linear-gradient(135deg, #667eea20, #764ba220); border-radius: 12px;">
-                <h3 id="currentVideoTitle" style="margin: 0 0 5px 0; color: #333;">${video.title}</h3>
-                <p id="currentVideoStatus" style="margin: 0; color: #666;">🎬 Video listo para reproducir</p>
-            </div>
-            
-            <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px;">
-                <button class="btn btn-small" id="playBtn" style="background: #2ecc71;">▶ Reproducir</button>
-                <button class="btn btn-small" id="pauseBtn">⏸ Pausar</button>
-                <button class="btn btn-small" id="replayBtn">↺ Repetir</button>
-            </div>
-            
-            <div>
-                <h4 style="margin: 0 0 10px 0;">🎬 Videos disponibles:</h4>
-                <div id="playlistContainer" style="max-height: 150px; overflow-y: auto; border-radius: 8px;">
-                    ${this.playlist.map((video, index) => `
-                        <div onclick="window.loadVideo(${index})" 
-                             style="padding: 12px; cursor: pointer; border-bottom: 1px solid #eee; 
-                                    ${index === this.currentIndex ? 'background: #e0e7ff; font-weight: bold; border-left: 3px solid #667eea;' : 'background: white;'}">
-                            <div style="display: flex; align-items: center; gap: 10px;">
-                                <span style="font-size: 24px;">${index === 0 ? '🐮' : '🎬'}</span>
-                                <span>${video.title}</span>
-                            </div>
-                        </div>
-                    `).join('')}
-                </div>
-            </div>
-        `;
-        
-        this.player = document.getElementById('videoPlayer');
-        this.setupButtons();
-        this.updateStatus('Listo para reproducir');
-    }
-    
-    setupButtons() {
-        document.getElementById('playBtn')?.addEventListener('click', () => {
-            if (this.player) {
-                this.player.play();
-                this.updateStatus('Reproduciendo');
-            }
-        });
-        
-        document.getElementById('pauseBtn')?.addEventListener('click', () => {
-            if (this.player) {
-                this.player.pause();
-                this.updateStatus('Pausado');
-            }
-        });
-        
-        document.getElementById('replayBtn')?.addEventListener('click', () => {
-            if (this.player) {
-                this.player.currentTime = 0;
-                this.player.play();
-                this.updateStatus('Reproduciendo desde inicio');
-            }
-        });
-        
-        if (this.player) {
-            this.player.addEventListener('ended', () => {
-                this.updateStatus('Video finalizado');
+        try {
+            this.player = new YT.Player('youtubePlayer', {
+                height: '250',
+                width: '100%',
+                videoId: 'dQw4w9WgXcQ',
+                playerVars: {
+                    'playsinline': 1,
+                    'controls': 1,
+                    'rel': 0,
+                    'modestbranding': 1
+                },
+                events: {
+                    'onReady': () => {
+                        this.playerReady = true;
+                        console.log('✅ Player listo');
+                        this.updateStatus('Listo');
+                        this.showNotification('🎬 Reproductor listo - Busca cualquier video');
+                    },
+                    'onStateChange': (event) => {
+                        if (event.data === 0) {
+                            this.updateStatus('Finalizado');
+                        } else if (event.data === 1) {
+                            this.updateStatus('Reproduciendo');
+                        } else if (event.data === 2) {
+                            this.updateStatus('Pausado');
+                        } else if (event.data === 3) {
+                            this.updateStatus('Buffering...');
+                        }
+                    },
+                    'onError': (error) => {
+                        console.error('Error en YouTube:', error);
+                        this.updateStatus('Error en el video');
+                    }
+                }
             });
-            
-            this.player.addEventListener('playing', () => {
-                this.updateStatus('Reproduciendo');
-            });
-            
-            this.player.addEventListener('pause', () => {
-                this.updateStatus('Pausado');
-            });
+        } catch (error) {
+            console.error('Error creando player:', error);
         }
     }
     
-    loadVideo(index) {
-        this.currentIndex = index;
-        const video = this.playlist[index];
-        
-        if (this.player) {
-            this.player.src = video.url;
-            this.player.load();
-            this.player.play();
+    loadVideo(videoId, title) {
+        if (!this.player || !this.playerReady) {
+            setTimeout(() => this.loadVideo(videoId, title), 500);
+            return;
         }
         
-        document.getElementById('currentVideoTitle').textContent = video.title;
-        this.updatePlaylistStyle();
-        this.updateStatus('Reproduciendo: ' + video.title);
-    }
-    
-    updatePlaylistStyle() {
-        const items = document.querySelectorAll('#playlistContainer div');
-        items.forEach((item, idx) => {
-            if (idx === this.currentIndex) {
-                item.style.background = '#e0e7ff';
-                item.style.fontWeight = 'bold';
-                item.style.borderLeft = '3px solid #667eea';
-            } else {
-                item.style.background = 'white';
-                item.style.fontWeight = 'normal';
-                item.style.borderLeft = 'none';
+        this.currentVideoId = videoId;
+        
+        try {
+            this.player.loadVideoById(videoId);
+            
+            const titleEl = document.getElementById('yt-title-text');
+            if (titleEl) {
+                titleEl.textContent = title;
             }
-        });
+            
+            const videoInfo = document.getElementById('video-info');
+            if (videoInfo) {
+                videoInfo.style.display = 'block';
+            }
+            
+            this.updateStatus('Cargando...');
+        } catch (error) {
+            console.error('Error cargando video:', error);
+            this.updateStatus('Error al cargar');
+        }
     }
     
     updateStatus(status) {
-        const statusEl = document.getElementById('currentVideoStatus');
+        const statusEl = document.getElementById('yt-status');
         if (statusEl) {
-            statusEl.textContent = `🎬 ${status}`;
+            statusEl.textContent = status;
         }
         
         const mainStatusEl = document.getElementById('statusText');
         if (mainStatusEl) {
-            const isOnline = status === 'Reproduciendo' || status === 'Listo para reproducir';
-            mainStatusEl.innerHTML = `<span class="status-indicator ${isOnline ? 'status-online' : 'status-offline'}"></span> Video - ${status}`;
+            const isOnline = status === 'Reproduciendo' || status === 'Listo';
+            mainStatusEl.innerHTML = `<span class="status-indicator ${isOnline ? 'status-online' : 'status-offline'}"></span> YouTube - ${status}`;
         }
+    }
+    
+    showNotification(message) {
+        const notification = document.createElement('div');
+        notification.className = 'notification';
+        notification.textContent = message;
+        document.body.appendChild(notification);
+        setTimeout(() => notification.remove(), 3000);
     }
 }
 

@@ -28,13 +28,22 @@
             <!-- 2. Redes Sociales -->
             <div class="card" id="card-sociales">
                 <h2>📱 Redes Sociales</h2>
-                <p>Cargando...</p>
+                <div id="socialPosts" class="social-post">
+                    <p>Cargando publicaciones...</p>
+                </div>
+                <button class="btn btn-small" id="actualizarPostsBtn">↻ Actualizar posts</button>
             </div>
 
             <!-- 3. E-commerce -->
             <div class="card" id="card-ecommerce">
                 <h2>🛒 E-commerce</h2>
-                <p>Cargando...</p>
+                <div class="product-search">
+                    <input type="text" id="productSearch" placeholder="Buscar producto..." class="input-field">
+                    <button class="btn btn-small" id="buscarProductoBtn">Buscar</button>
+                </div>
+                <div id="productResult" class="product-card">
+                    <p>Busca un producto para ver resultados</p>
+                </div>
             </div>
 
             <!-- 4. Base de datos -->
@@ -64,14 +73,36 @@
                 </div>
             </div>
 
-            <!-- 6. Streaming -->
-            <div class="card" id="card-streaming">
-                <h2>🎬 Streaming - YouTube Player</h2>
-                <div id="playerContainer"></div>
-                <p id="statusText" class="status-text">
-                    <span class="status-indicator status-offline"></span>
-                    YouTube Player
-                </p>
+            <!-- 6. Streaming - YouTube (con tu diseño) -->
+            <div class="card c-yt" id="card-streaming">
+                <div class="card-head">
+                    <div class="card-icon">▶️</div>
+                    <div>
+                        <div class="card-title">YOUTUBE</div>
+                        <div class="card-sub">DATA API v3 · STREAMING</div>
+                    </div>
+                </div>
+                <div style="display:flex; gap:.5rem">
+                    <input id="yt-name" class="inp" placeholder="Nombre del video…" class="input-field">
+                    <button class="btn btn-yt" id="ytSearchBtn" style="flex-shrink:0">▶</button>
+                </div>
+                <div id="yt-validation"></div>
+                <div id="yt-title-box">
+                    <div class="yt-now-label">▶ REPRODUCIENDO AHORA</div>
+                    <div class="yt-now-title" id="yt-title-text">–</div>
+                </div>
+                <div id="video-container" style="margin-top:.75rem">
+                    <div class="yt-placeholder">
+                        <span style="font-size:2.5rem">🎬</span>
+                        <span style="font-size:.7rem">ESCRIBE Y PRESIONA ▶</span>
+                    </div>
+                </div>
+                <div id="video-info" style="display:none; margin-top:.6rem">
+                    <div class="ir">
+                        <span class="il">ESTADO</span>
+                        <span id="yt-status" class="iv"></span>
+                    </div>
+                </div>
             </div>
 
         </div>
